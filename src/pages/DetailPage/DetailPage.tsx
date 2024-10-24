@@ -6,8 +6,9 @@ import { Button, Skeleton } from "@mui/material";
 import { Error } from "../../components/Error/Error";
 import { Paths } from "../../enums/Paths";
 import "@xyflow/react/dist/style.css";
-import { ReactFlow } from "@xyflow/react";
-import { getNodes } from "../../helpers/api/getNodes";
+import { ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
+import { getNodes } from "../../helpers/getNodes";
+import { getEdges } from "../../helpers/getEdges";
 
 const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
 const initialNodes = [
@@ -20,6 +21,8 @@ export const DetailPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFailed, setIsFailed] = useState(false);
   const { personId } = useParams();
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +30,7 @@ export const DetailPage: React.FC = () => {
         setIsLoading(true);
         try {
           const result = await getPerson(Number(personId));
+          // console.log(result);
           setPerson(result);
         } catch (error) {
           setIsFailed(true);
@@ -37,6 +41,16 @@ export const DetailPage: React.FC = () => {
     };
     fetchData();
   }, [personId]);
+
+  useEffect(() => {
+    if (person) {
+      const generatedNotes = getNodes(person);
+      const generatedEdges = getEdges(generatedNotes);
+      setNodes(generatedNotes);
+      setEdges(generatedEdges);
+      console.log(person);
+    }
+  }, [person]);
 
   const skeleton = <Skeleton variant="rectangular" width={210} height={50} />;
 
@@ -51,16 +65,16 @@ export const DetailPage: React.FC = () => {
       )}
       <div
         style={{
-          width: "300px",
-          height: "300px",
+          width: "1500px",
+          height: "600px",
           backgroundColor: "red",
           marginLeft: "auto",
           marginRight: "auto",
         }}
       >
         <ReactFlow
-          nodes={initialNodes}
-          edges={initialEdges}
+          nodes={nodes}
+          edges={edges}
           onEdgesChange={() => {}}
           onNodesChange={() => {}}
         />

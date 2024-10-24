@@ -1,5 +1,4 @@
-import { Person } from "../../interfaces/Person";
-import { PersonResponseData } from "../../interfaces/PersonResponseData";
+import { Person, PersonResponseData } from "../../interfaces/Person";
 import httpCliet from "./api";
 
 export const getPerson = (personId: number): Promise<Person> =>
