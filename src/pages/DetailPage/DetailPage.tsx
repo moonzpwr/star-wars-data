@@ -7,6 +7,7 @@ import { Paths } from "../../enums/Paths";
 import { getNodes } from "../../helpers/getNodes";
 import { getEdges } from "../../helpers/getEdges";
 import { usePersonData } from "../../hooks/usePersonData";
+import styles from "./DetailePage.module.css";
 import "@xyflow/react/dist/style.css";
 
 export const DetailPage: React.FC = () => {
@@ -27,8 +28,18 @@ export const DetailPage: React.FC = () => {
   const skeleton = <Skeleton variant="rectangular" width={210} height={50} />;
 
   return (
-    <div>
-      <Button onClick={() => navigate(Paths.root)}>back</Button>
+    <div className={styles.rootContainer}>
+      <Button
+        variant="contained"
+        onClick={() => navigate(Paths.root)}
+        className={styles.backButton}
+        sx={{
+          backgroundColor: "rgba(144, 202, 249, 0.3)",
+          color: "rgba(255, 238, 88, 1)",
+        }}
+      >
+        &#x276E;
+      </Button>
       {isError ? (
         <Error />
       ) : (
@@ -36,15 +47,7 @@ export const DetailPage: React.FC = () => {
           {isLoading
             ? skeleton
             : data && (
-                <div
-                  style={{
-                    width: "1500px",
-                    height: "600px",
-                    backgroundColor: "red",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                  }}
-                >
+                <div className={styles.nodesContainer}>
                   <ReactFlow nodes={nodes} edges={edges} />
                 </div>
               )}

@@ -1,0 +1,41 @@
+.rootContainer {
+  position: relative;
+  width: 680px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 160px 20px 30px 20px;
+}
+
+.buttonsContainer {
+  position: absolute;
+  bottom: 0;
+  right: 36px;
+  width: 138px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.listItemButton {
+  background-color: rgba(144, 202, 249, 0.3);
+  border-radius: 5px;
+  color: rgba(255, 238, 88, 1);
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  padding: 7px 5px;
+}
+
+.logoImage {
+  width: 300px;
+  position: absolute;
+  top: -60px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+.listItemButton:hover {
+  background-color: rgba(144, 202, 249, 0.5);
+}

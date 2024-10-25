@@ -1,0 +1,20 @@
+.rootContainer {
+  position: relative;
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nodesContainer {
+  width: 1200px;
+  height: 100vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.backButton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
