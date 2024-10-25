@@ -1,5 +1,5 @@
 import { Person } from "../interfaces/Person";
-import { Node } from "../interfaces/Node";
+import { type Node } from "@xyflow/react";
 
 const LAYOUT_CENTER = 650;
 const NODES_GAP = 100;
@@ -44,8 +44,8 @@ export const getNodes = ({ name, starships, films }: Person): Node[] => {
   //create films nodes
   films.map((film, i) => {
     nodes.push({
-      id: `film-${film}`,
-      data: { label: film },
+      id: `film-${film.id}`,
+      data: { label: film.title },
       style: { border: "1px solid #777", padding: 10, cursor: "auto" },
       position: { x: getNodeXPosition(i, films.length), y: 150 },
     });
@@ -55,8 +55,8 @@ export const getNodes = ({ name, starships, films }: Person): Node[] => {
   //create starships nodes
   starships.map((starship, i) => {
     nodes.push({
-      id: `starship-${starship}`,
-      data: { label: starship },
+      id: `starship-${starship.id}`,
+      data: { label: starship.name },
       style: { border: "1px solid #777", padding: 10, cursor: "auto" },
       position: { x: getNodeXPosition(i, starships.length), y: 400 },
     });

@@ -1,4 +1,7 @@
-export interface Person {
+import { Film } from "./Film";
+import { Starship } from "./Starship";
+
+export interface RawPerson {
   id: number;
   name: string;
   height: number;
@@ -31,4 +34,9 @@ export interface PersonResponseData {
   created: string;
   edited: string;
   url: string;
+}
+
+export interface Person extends Omit<RawPerson, "films" | "starships"> {
+  films: Film[];
+  starships: Starship[];
 }

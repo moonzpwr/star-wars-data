@@ -1,10 +1,4 @@
-import { Node } from "../interfaces/Node";
-
-interface Edge {
-  id: string;
-  source: string;
-  target: string;
-}
+import { type Node, type Edge } from "@xyflow/react";
 
 export const getEdges = (nodes: Node[]): Edge[] => {
   const result: Edge[] = [];
@@ -28,12 +22,6 @@ export const getEdges = (nodes: Node[]): Edge[] => {
       return null;
     });
   }
-
-  // const initialEdges = [
-  //   { id: 'hidden-e1-2', source: 'hidden-1', target: 'hidden-2' },
-  //   { id: 'hidden-e1-3', source: 'hidden-1', target: 'hidden-3' },
-  //   { id: 'hidden-e3-4', source: 'hidden-3', target: 'hidden-4' },
-  // ];
 
   return result;
 };

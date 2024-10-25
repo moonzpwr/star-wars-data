@@ -1,84 +1,55 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Person } from "../../interfaces/Person";
-import { getPerson } from "../../helpers/api/getPerson";
+import { useNavigate } from "react-router-dom";
 import { Button, Skeleton } from "@mui/material";
+import { ReactFlow, type Node, type Edge } from "@xyflow/react";
 import { Error } from "../../components/Error/Error";
 import { Paths } from "../../enums/Paths";
-import "@xyflow/react/dist/style.css";
-import { ReactFlow, useEdgesState, useNodesState } from "@xyflow/react";
 import { getNodes } from "../../helpers/getNodes";
 import { getEdges } from "../../helpers/getEdges";
-
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
-const initialNodes = [
-  { id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-];
+import { usePersonData } from "../../hooks/usePersonData";
+import "@xyflow/react/dist/style.css";
 
 export const DetailPage: React.FC = () => {
-  const [person, setPerson] = useState<Person | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
-  const { personId } = useParams();
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const { data, isLoading, isError } = usePersonData();
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchData = async () => {
-      if (personId) {
-        setIsLoading(true);
-        try {
-          const result = await getPerson(Number(personId));
-          // console.log(result);
-          setPerson(result);
-        } catch (error) {
-          setIsFailed(true);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-    fetchData();
-  }, [personId]);
 
   useEffect(() => {
-    if (person) {
-      const generatedNotes = getNodes(person);
+    if (data) {
+      const generatedNotes = getNodes(data);
       const generatedEdges = getEdges(generatedNotes);
       setNodes(generatedNotes);
       setEdges(generatedEdges);
-      console.log(person);
     }
-  }, [person]);
+  }, [data]);
 
   const skeleton = <Skeleton variant="rectangular" width={210} height={50} />;
 
   return (
     <div>
-      detail page
       <Button onClick={() => navigate(Paths.root)}>back</Button>
-      {isFailed ? (
+      {isError ? (
         <Error />
       ) : (
-        <>{isLoading ? skeleton : person && <ul>{person?.name}</ul>}</>
+        <>
+          {isLoading
+            ? skeleton
+            : data && (
+                <div
+                  style={{
+                    width: "1500px",
+                    height: "600px",
+                    backgroundColor: "red",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                >
+                  <ReactFlow nodes={nodes} edges={edges} />
+                </div>
+              )}
+        </>
       )}
-      <div
-        style={{
-          width: "1500px",
-          height: "600px",
-          backgroundColor: "red",
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-      >
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onEdgesChange={() => {}}
-          onNodesChange={() => {}}
-        />
-      </div>
     </div>
   );
 };

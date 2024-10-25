@@ -1,7 +1,7 @@
-import { Person, PersonResponseData } from "../../interfaces/Person";
+import { RawPerson, PersonResponseData } from "../../interfaces/Person";
 import httpCliet from "./api";
 
-export const getPeople = (page: number): Promise<Person[]> =>
+export const getPeople = (page: number): Promise<RawPerson[]> =>
   httpCliet
     .get<{ results: PersonResponseData[] }>(`people/?page=${page}`)
     .then(({ data }) =>

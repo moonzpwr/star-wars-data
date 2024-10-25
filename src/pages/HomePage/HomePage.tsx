@@ -4,28 +4,18 @@ import { useEffect, useState } from "react";
 import { getPeople } from "../../helpers/api/getPeople";
 import { Button, Skeleton } from "@mui/material";
 import { Error } from "../../components/Error/Error";
-import { Person } from "../../interfaces/Person";
+import { useQuery } from "react-query";
 
 export const HomePage: React.FC = () => {
-  const [peopleData, setPeopleData] = useState<Person[] | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
   const [pageCount, setPageCount] = useState<number>(1);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const result = await getPeople(pageCount);
-        setPeopleData(result);
-      } catch (error) {
-        setIsFailed(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [pageCount]);
+  const {
+    data: peopleData,
+    isLoading,
+    isError,
+  } = useQuery(["peopleList", pageCount], () => getPeople(pageCount));
+
+  useEffect(() => {}, [pageCount]);
 
   const handleNextPage = () => {
     setPageCount((prevState) => (prevState += 1));
@@ -53,7 +43,7 @@ export const HomePage: React.FC = () => {
   return (
     <div>
       home
-      {isFailed ? (
+      {isError ? (
         <Error />
       ) : (
         <>
