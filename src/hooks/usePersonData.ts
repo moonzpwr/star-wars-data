@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
-import { getPerson } from "../helpers/api/getPerson";
 import { useQuery } from "react-query";
-import { getFilms } from "../helpers/api/getFilms";
-import { getStarships } from "../helpers/api/getStarships";
 import { Person } from "../interfaces/Person";
+import { getFilms, getPerson, getStarships } from "../helpers/api";
 
 interface ReturnValue {
   data?: Person;
@@ -12,7 +10,9 @@ interface ReturnValue {
 }
 
 export const usePersonData = (): ReturnValue => {
-  const { personId } = useParams();
+  const { personId } = useParams(); //person id from url
+
+  //a chain of fetches to collect all information about a person
   const { data, isLoading, isError } = useQuery("personData", () =>
     getPerson(Number(personId)).then((personResponse) =>
       getFilms(personResponse.films).then((filmResponse) =>

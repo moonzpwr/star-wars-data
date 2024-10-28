@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Paths } from "../../enums/Paths";
 import { useEffect, useState } from "react";
-import { getPeople } from "../../helpers/api/getPeople";
-import { Button, Skeleton, List, ListItem, ListItemText } from "@mui/material";
+import { Skeleton, List, ListItem, ListItemText } from "@mui/material";
 import { Error } from "../../components/Error/Error";
 import { useQuery } from "react-query";
 import styles from "./HomePage.module.css";
+import { getPeople } from "../../helpers/api";
+import { StyledButton } from "../../components/StyledButton/StyledButton";
 
 export const HomePage: React.FC = () => {
   const [pageCount, setPageCount] = useState<number>(1);
@@ -17,8 +18,6 @@ export const HomePage: React.FC = () => {
     isError,
   } = useQuery(["peopleList", pageCount], () => getPeople(pageCount));
 
-  useEffect(() => {}, [pageCount]);
-
   const handleNextPage = () => {
     setPageCount((prevState) => (prevState += 1));
   };
@@ -26,7 +25,7 @@ export const HomePage: React.FC = () => {
     setPageCount((prevState) => (prevState -= 1));
   };
 
-  const tableSkeleton = (
+  const skeleton = (
     <List>
       {Array(10)
         .fill(0)
@@ -49,60 +48,37 @@ export const HomePage: React.FC = () => {
         <Error />
       ) : (
         <>
+          <img
+            className={styles.logoImage}
+            src="https://www.ozziecollectables.com/cdn/shop/files/IKO2001--StarWars-Logo-Neon-Sign-1.png?v=1724185198"
+            alt="star wars logo"
+          />
           {isLoading ? (
-            tableSkeleton
+            skeleton
           ) : (
-            <>
-              <img
-                className={styles.logoImage}
-                src="https://www.ozziecollectables.com/cdn/shop/files/IKO2001--StarWars-Logo-Neon-Sign-1.png?v=1724185198"
-                alt="star wars logo"
-              />
-              <List>
-                {peopleData?.map(({ name, id }) => (
-                  <ListItem key={id}>
-                    <button
-                      className={styles.listItemButton}
-                      onClick={() => navigate(`${Paths.person}${id}`)}
-                    >
-                      <ListItemText primary={name} />
-                      {/* <img
-                      src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
-                      alt={name}
-                      style={{ width: 40 }}
-                    /> */}
-                    </button>
-                  </ListItem>
-                ))}
-              </List>
-            </>
+            <List>
+              {peopleData?.map(({ name, id }) => (
+                <ListItem key={id}>
+                  <button
+                    className={styles.listItemButton}
+                    onClick={() => navigate(`${Paths.person}${id}`)}
+                  >
+                    <ListItemText primary={name} />
+                  </button>
+                </ListItem>
+              ))}
+            </List>
           )}
           <div className={styles.buttonsContainer}>
             {pageCount !== 1 && (
-              <Button
-                sx={{
-                  backgroundColor: "rgba(144, 202, 249, 0.3)",
-                  color: "rgba(255, 238, 88, 1)",
-                }}
-                variant="contained"
-                onClick={handlePreviousPage}
-                disabled={isLoading}
-              >
+              <StyledButton onClick={handlePreviousPage} disabled={isLoading}>
                 &#x276E;
-              </Button>
+              </StyledButton>
             )}
             {!(peopleData && peopleData.length < 10) && (
-              <Button
-                sx={{
-                  backgroundColor: "rgba(144, 202, 249, 0.3)",
-                  color: "rgba(255, 238, 88, 1)",
-                }}
-                variant="contained"
-                onClick={handleNextPage}
-                disabled={isLoading}
-              >
+              <StyledButton onClick={handleNextPage} disabled={isLoading}>
                 &#x276F;
-              </Button>
+              </StyledButton>
             )}
           </div>
         </>

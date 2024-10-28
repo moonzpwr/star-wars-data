@@ -26,8 +26,12 @@
   padding: 7px 5px;
 }
 
+.listItemButton:hover {
+  background-color: rgba(144, 202, 249, 0.5);
+}
+
 .logoImage {
-  width: 300px;
+  height: 300px;
   position: absolute;
   top: -60px;
   margin-left: auto;
@@ -36,6 +40,8 @@
   right: 0;
 }
 
-.listItemButton:hover {
-  background-color: rgba(144, 202, 249, 0.5);
+@media screen and (max-width: 768px) {
+  .rootContainer {
+    width: 300px;
+  }
 }

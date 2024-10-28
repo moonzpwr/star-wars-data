@@ -1,0 +1,30 @@
+.rootContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 680px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+}
+
+.textBlock {
+  color: #e53935;
+  background-color: rgba(144, 202, 249, 0.3);
+  border: 1px solid rgba(144, 202, 249, 1);
+  border-radius: 5px;
+  font-size: 2rem;
+  font-weight: 800;
+  padding: 60px;
+}
+
+@media screen and (max-width: 768px) {
+  .rootContainer {
+    width: 300px;
+  }
+
+  .textBlock {
+    padding: 10px;
+  }
+}

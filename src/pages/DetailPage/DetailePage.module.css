@@ -1,20 +1,34 @@
 .rootContainer {
   position: relative;
-  width: 1200px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .nodesContainer {
-  width: 1200px;
+  width: 100%;
   height: 100vh;
   margin-left: auto;
   margin-right: auto;
 }
 
-.backButton {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
+.spinner {
+  margin: 250px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-top: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid rgba(144, 202, 249, 0.5);
+  border-left: 5px solid rgba(144, 202, 249, 0.5);
+  animation: spin 0.5s infinite linear;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
