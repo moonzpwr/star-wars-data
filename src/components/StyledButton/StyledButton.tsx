@@ -4,12 +4,14 @@ interface Props {
   onClick: () => void;
   disabled?: boolean;
   children: string | JSX.Element;
+  dataTestId?: string;
 }
 
 export const StyledButton: React.FC<Props> = ({
   onClick,
   disabled = false,
   children,
+  dataTestId = "button",
 }) => {
   return (
     <Button
@@ -20,6 +22,7 @@ export const StyledButton: React.FC<Props> = ({
       variant="contained"
       onClick={onClick}
       disabled={disabled}
+      data-testid={dataTestId}
     >
       {children}
     </Button>
