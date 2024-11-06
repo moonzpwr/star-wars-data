@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/star-wars-data/static/css/main.8b765099.css",
+    "main.js": "/star-wars-data/static/js/main.e610882f.js",
+    "static/media/space.jpg": "/star-wars-data/static/media/space.b3db88363170997dac39.jpg",
+    "index.html": "/star-wars-data/index.html",
+    "main.8b765099.css.map": "/star-wars-data/static/css/main.8b765099.css.map",
+    "main.e610882f.js.map": "/star-wars-data/static/js/main.e610882f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8b765099.css",
+    "static/js/main.e610882f.js"
+  ]
+}
