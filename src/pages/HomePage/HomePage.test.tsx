@@ -1,4 +1,10 @@
-import { screen, render, waitFor, fireEvent } from "@testing-library/react";
+import {
+  screen,
+  render,
+  waitFor,
+  fireEvent,
+  act,
+} from "@testing-library/react";
 import { HomePage } from "./HomePage";
 import { BrowserRouter, useNavigate } from "react-router-dom";
 
@@ -37,8 +43,11 @@ describe("Home Page", () => {
     global.fetch = original;
   });
 
-  it("home page renders", () => {
-    render(<HomePage />, { wrapper: BrowserRouter });
+  it("home page renders", async () => {
+    global.fetch = fetchMock.mockResolvedValue(mockRequest(200, mockResponse));
+    await act(async () => {
+      render(<HomePage />, { wrapper: BrowserRouter });
+    });
     const logoImageElement = screen.getByAltText("star wars logo");
     expect(logoImageElement).toBeInTheDocument();
   });
