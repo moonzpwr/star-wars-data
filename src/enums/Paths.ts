@@ -1,4 +1,4 @@
 export enum Paths {
-  root = "/",
+  root = "/star-wars-data",
   person = "person/",
 }

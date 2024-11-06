@@ -127,6 +127,6 @@ describe("Detail Page", () => {
 
     const backButton = screen.getByTestId("back-button");
     fireEvent.click(backButton);
-    expect(navigate).toHaveBeenCalledWith("/");
+    expect(navigate).toHaveBeenCalledWith("/star-wars-data");
   });
 });

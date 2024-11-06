@@ -21,6 +21,6 @@ describe("NotFoundPage", () => {
     const homeButton = screen.getByText(/home/i);
     expect(homeButton).toBeInTheDocument();
     fireEvent.click(homeButton);
-    expect(navigate).toHaveBeenCalledWith("/");
+    expect(navigate).toHaveBeenCalledWith("/star-wars-data");
   });
 });
