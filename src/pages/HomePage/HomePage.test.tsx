@@ -117,6 +117,6 @@ describe("Home Page", () => {
     render(<HomePage />, { wrapper: BrowserRouter });
     const button = await screen.findByTestId(`redirect-button-Foo`);
     fireEvent.click(button);
-    expect(navigate).toHaveBeenCalledWith("person/1");
+    expect(navigate).toHaveBeenCalledWith("/star-wars-data/person/1");
   });
 });
